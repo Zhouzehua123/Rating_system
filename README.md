@@ -1,2 +1,2 @@
 # Rating_system
-Golang
+Golang。
