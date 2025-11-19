@@ -2,20 +2,42 @@ syntax = "proto3";
 
 package api.review.v1;
 
+import "google/api/annotations.proto"; 
+
 option go_package = "review-service/api/review/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.review.v1";
 
+//定义评价服务
 service Review {
-	rpc CreateReview (CreateReviewRequest) returns (CreateReviewReply);
+	// 创建评价
+	rpc CreateReview (CreateReviewRequest) returns (CreateReviewReply){
+		option(google.api.http) = {
+			post: "/v1/reviews"
+			body: "*"
+		};
+	};
 	rpc UpdateReview (UpdateReviewRequest) returns (UpdateReviewReply);
 	rpc DeleteReview (DeleteReviewRequest) returns (DeleteReviewReply);
 	rpc GetReview (GetReviewRequest) returns (GetReviewReply);
 	rpc ListReview (ListReviewRequest) returns (ListReviewReply);
 }
 
-message CreateReviewRequest {}
-message CreateReviewReply {}
+// 创建评价的参数
+message CreateReviewRequest {
+	int64 user_Id = 1;        // 用户ID
+	int64 order_Id = 2;       // 订单ID
+	int32 score = 3;		  // 商品评分
+	int32 serviceScore = 4;  // 服务评分
+	int32 expressScore = 5; // 物流评分
+	string content = 6;      // 评价内容
+	string picInfo = 7; // 评价图片
+	string videoInfo = 8; // 评价视频
+	bool anonymous = 9; // 是否匿名评价
+}
+message CreateReviewReply {
+	int64 reviewId = 1; // 评价ID
+}
 
 message UpdateReviewRequest {}
 message UpdateReviewReply {}
