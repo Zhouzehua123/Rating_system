@@ -12,11 +12,10 @@ import (
 	"review-service/internal/data"
 	"review-service/internal/server"
 	"review-service/internal/service"
+
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
-)
 
-import (
 	_ "go.uber.org/automaxprocs"
 )
 
