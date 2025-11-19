@@ -171,7 +171,7 @@ func (*CreateReviewReply) Descriptor() ([]byte, []int) {
 
 func (x *CreateReviewReply) GetReviewId() int64 {
 	if x != nil {
-		return x.ReviewId
+		return x.ReviewID
 	}
 	return 0
 }
