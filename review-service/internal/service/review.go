@@ -19,7 +19,7 @@ func NewReviewService(uc *biz.ReviewUsecase) *ReviewService {
 }
 
 func (s *ReviewService) CreateReview(ctx context.Context, req *pb.CreateReviewRequest) (*pb.CreateReviewReply, error) {
-	fmt.Println("[service] CreateReview,req:%#v\n", req)
+	fmt.Printf("[service] CreateReview,req:%#v\n", req)
 	//调用biz层
 	review, err := s.uc.CreateReview(ctx, &model.ReviewInfo{})
 	//拼装返回结果

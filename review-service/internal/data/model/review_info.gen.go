@@ -46,7 +46,7 @@ type ReviewInfo struct {
 	CtrlJSON      string     `gorm:"column:ctrl_json;not null" json:"ctrl_json"`
 }
 
-// TableName ReviewInfo's table name
+// //获取数据库的评价信息表的表名："review_info"
 func (*ReviewInfo) TableName() string {
 	return TableNameReviewInfo
 }

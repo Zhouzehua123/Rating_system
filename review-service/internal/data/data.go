@@ -14,7 +14,7 @@ import (
 )
 
 // ProviderSet is data providers.
-var ProviderSet = wire.NewSet(NewData, NewGreeterRepo)
+var ProviderSet = wire.NewSet(NewData, NewReviewRepo, NewDB)
 
 // Data .
 type Data struct {
@@ -32,7 +32,7 @@ func NewData(db *gorm.DB, logger log.Logger) (*Data, func(), error) {
 	query.SetDefault(db)
 	return &Data{query: query.Q, log: log.NewHelper(logger)}, cleanup, nil
 }
-func NewDB(cfg conf.Data) (*gorm.DB, error) {
+func NewDB(cfg *conf.Data) (*gorm.DB, error) {
 	switch strings.ToLower(cfg.Database.GetDriver()) {
 	case "mysql":
 		return gorm.Open(mysql.Open(cfg.Database.GetSource()))
