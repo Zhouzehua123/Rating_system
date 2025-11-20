@@ -7,15 +7,18 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 )
 
+// 定义数据库的接口，哪个数据库实现了这个SaveReview方法，该数据库就是这个接口的实现者，因此可以使用不同的数据库进行存储或者测试，例如mysql，MongoDB，甚至是内存数据库等。
 type ReviewRepo interface {
 	SaveReview(context.Context, *model.ReviewInfo) (*model.ReviewInfo, error)
 }
 
+// 定义一个结构体，成员是数据库接口和日志工具
 type ReviewUsecase struct {
 	repo ReviewRepo
 	log  *log.Helper
 }
 
+// 构造函数，接收数据库接口和日志工具作为参数
 func NewReviewUsecase(repo ReviewRepo, logger log.Logger) *ReviewUsecase {
 	return &ReviewUsecase{
 		repo: repo,
