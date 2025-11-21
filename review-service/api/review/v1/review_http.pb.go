@@ -28,7 +28,7 @@ type ReviewHTTPServer interface {
 
 func RegisterReviewHTTPServer(s *http.Server, srv ReviewHTTPServer) {
 	r := s.Route("/")
-	r.POST("/v1/reviews", _Review_CreateReview0_HTTP_Handler(srv))
+	r.POST("/v1/review", _Review_CreateReview0_HTTP_Handler(srv))
 }
 
 func _Review_CreateReview0_HTTP_Handler(srv ReviewHTTPServer) func(ctx http.Context) error {
@@ -69,7 +69,7 @@ func NewReviewHTTPClient(client *http.Client) ReviewHTTPClient {
 // CreateReview 创建评价
 func (c *ReviewHTTPClientImpl) CreateReview(ctx context.Context, in *CreateReviewRequest, opts ...http.CallOption) (*CreateReviewReply, error) {
 	var out CreateReviewReply
-	pattern := "/v1/reviews"
+	pattern := "/v1/review"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationReviewCreateReview))
 	opts = append(opts, http.PathTemplate(pattern))

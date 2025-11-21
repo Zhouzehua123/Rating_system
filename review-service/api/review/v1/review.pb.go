@@ -7,13 +7,12 @@
 package v1
 
 import (
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
-
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	reflect "reflect"
+	sync "sync"
+	unsafe "unsafe"
 )
 
 const (
@@ -26,15 +25,15 @@ const (
 // 创建评价的参数
 type CreateReviewRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	User_Id       int64                  `protobuf:"varint,1,opt,name=user_Id,json=userId,proto3" json:"user_Id,omitempty"`    // 用户ID
-	Order_Id      int64                  `protobuf:"varint,2,opt,name=order_Id,json=orderId,proto3" json:"order_Id,omitempty"` // 订单ID
-	Score         int32                  `protobuf:"varint,3,opt,name=score,proto3" json:"score,omitempty"`                    // 商品评分
-	ServiceScore  int32                  `protobuf:"varint,4,opt,name=serviceScore,proto3" json:"serviceScore,omitempty"`      // 服务评分
-	ExpressScore  int32                  `protobuf:"varint,5,opt,name=expressScore,proto3" json:"expressScore,omitempty"`      // 物流评分
-	Content       string                 `protobuf:"bytes,6,opt,name=content,proto3" json:"content,omitempty"`                 // 评价内容
-	PicInfo       string                 `protobuf:"bytes,7,opt,name=picInfo,proto3" json:"picInfo,omitempty"`                 // 评价图片
-	VideoInfo     string                 `protobuf:"bytes,8,opt,name=videoInfo,proto3" json:"videoInfo,omitempty"`             // 评价视频
-	Anonymous     bool                   `protobuf:"varint,9,opt,name=anonymous,proto3" json:"anonymous,omitempty"`            // 是否匿名评价
+	UserID        int64                  `protobuf:"varint,1,opt,name=userID,proto3" json:"userID,omitempty"`             // 用户ID
+	OrderID       int64                  `protobuf:"varint,2,opt,name=orderID,proto3" json:"orderID,omitempty"`           // 订单ID
+	Score         int32                  `protobuf:"varint,3,opt,name=score,proto3" json:"score,omitempty"`               // 商品评分
+	ServiceScore  int32                  `protobuf:"varint,4,opt,name=serviceScore,proto3" json:"serviceScore,omitempty"` // 服务评分
+	ExpressScore  int32                  `protobuf:"varint,5,opt,name=expressScore,proto3" json:"expressScore,omitempty"` // 物流评分
+	Content       string                 `protobuf:"bytes,6,opt,name=content,proto3" json:"content,omitempty"`            // 评价内容
+	PicInfo       string                 `protobuf:"bytes,7,opt,name=picInfo,proto3" json:"picInfo,omitempty"`            // 评价图片
+	VideoInfo     string                 `protobuf:"bytes,8,opt,name=videoInfo,proto3" json:"videoInfo,omitempty"`        // 评价视频
+	Anonymous     bool                   `protobuf:"varint,9,opt,name=anonymous,proto3" json:"anonymous,omitempty"`       // 是否匿名评价
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -69,16 +68,16 @@ func (*CreateReviewRequest) Descriptor() ([]byte, []int) {
 	return file_api_review_v1_review_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CreateReviewRequest) GetUser_Id() int64 {
+func (x *CreateReviewRequest) GetUserID() int64 {
 	if x != nil {
-		return x.User_Id
+		return x.UserID
 	}
 	return 0
 }
 
-func (x *CreateReviewRequest) GetOrder_Id() int64 {
+func (x *CreateReviewRequest) GetOrderID() int64 {
 	if x != nil {
-		return x.Order_Id
+		return x.OrderID
 	}
 	return 0
 }
@@ -134,7 +133,7 @@ func (x *CreateReviewRequest) GetAnonymous() bool {
 
 type CreateReviewReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ReviewID      int64                  `protobuf:"varint,1,opt,name=reviewId,proto3" json:"reviewId,omitempty"` // 评价ID
+	ReviewID      int64                  `protobuf:"varint,1,opt,name=reviewID,proto3" json:"reviewID,omitempty"` // 评价ID
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -169,7 +168,7 @@ func (*CreateReviewReply) Descriptor() ([]byte, []int) {
 	return file_api_review_v1_review_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreateReviewReply) GetReviewId() int64 {
+func (x *CreateReviewReply) GetReviewID() int64 {
 	if x != nil {
 		return x.ReviewID
 	}
@@ -468,10 +467,10 @@ var File_api_review_v1_review_proto protoreflect.FileDescriptor
 
 const file_api_review_v1_review_proto_rawDesc = "" +
 	"\n" +
-	"\x1aapi/review/v1/review.proto\x12\rapi.review.v1\x1a\x1cgoogle/api/annotations.proto\"\x97\x02\n" +
-	"\x13CreateReviewRequest\x12\x17\n" +
-	"\auser_Id\x18\x01 \x01(\x03R\x06userId\x12\x19\n" +
-	"\border_Id\x18\x02 \x01(\x03R\aorderId\x12\x14\n" +
+	"\x1aapi/review/v1/review.proto\x12\rapi.review.v1\x1a\x1cgoogle/api/annotations.proto\"\x95\x02\n" +
+	"\x13CreateReviewRequest\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\x03R\x06userID\x12\x18\n" +
+	"\aorderID\x18\x02 \x01(\x03R\aorderID\x12\x14\n" +
 	"\x05score\x18\x03 \x01(\x05R\x05score\x12\"\n" +
 	"\fserviceScore\x18\x04 \x01(\x05R\fserviceScore\x12\"\n" +
 	"\fexpressScore\x18\x05 \x01(\x05R\fexpressScore\x12\x18\n" +
@@ -480,7 +479,7 @@ const file_api_review_v1_review_proto_rawDesc = "" +
 	"\tvideoInfo\x18\b \x01(\tR\tvideoInfo\x12\x1c\n" +
 	"\tanonymous\x18\t \x01(\bR\tanonymous\"/\n" +
 	"\x11CreateReviewReply\x12\x1a\n" +
-	"\breviewId\x18\x01 \x01(\x03R\breviewId\"\x15\n" +
+	"\breviewID\x18\x01 \x01(\x03R\breviewID\"\x15\n" +
 	"\x13UpdateReviewRequest\"\x13\n" +
 	"\x11UpdateReviewReply\"\x15\n" +
 	"\x13DeleteReviewRequest\"\x13\n" +
@@ -488,9 +487,10 @@ const file_api_review_v1_review_proto_rawDesc = "" +
 	"\x10GetReviewRequest\"\x10\n" +
 	"\x0eGetReviewReply\"\x13\n" +
 	"\x11ListReviewRequest\"\x11\n" +
-	"\x0fListReviewReply2\xbf\x03\n" +
-	"\x06Review\x12l\n" +
-	"\fCreateReview\x12\".api.review.v1.CreateReviewRequest\x1a .api.review.v1.CreateReviewReply\"\x16\x82\xd3\xe4\x93\x02\x10:\x01*\"\v/v1/reviews\x12T\n" +
+	"\x0fListReviewReply2\xbe\x03\n" +
+	"\x06Review\x12k\n" +
+	"\fCreateReview\x12\".api.review.v1.CreateReviewRequest\x1a .api.review.v1.CreateReviewReply\"\x15\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
+	"/v1/review\x12T\n" +
 	"\fUpdateReview\x12\".api.review.v1.UpdateReviewRequest\x1a .api.review.v1.UpdateReviewReply\x12T\n" +
 	"\fDeleteReview\x12\".api.review.v1.DeleteReviewRequest\x1a .api.review.v1.DeleteReviewReply\x12K\n" +
 	"\tGetReview\x12\x1f.api.review.v1.GetReviewRequest\x1a\x1d.api.review.v1.GetReviewReply\x12N\n" +
