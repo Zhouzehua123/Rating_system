@@ -7,7 +7,7 @@ info:
     description: 定义评价服务
     version: 0.0.1
 paths:
-    /v1/reviews:
+    /v1/review:
         post:
             tags:
                 - Review
@@ -37,14 +37,14 @@ components:
         CreateReviewReply:
             type: object
             properties:
-                reviewId:
+                reviewID:
                     type: string
         CreateReviewRequest:
             type: object
             properties:
-                userId:
+                userID:
                     type: string
-                orderId:
+                orderID:
                     type: string
                 score:
                     type: integer
