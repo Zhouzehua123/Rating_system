@@ -2,8 +2,8 @@ package biz
 
 import (
 	"context"
-	"errors"
 	"fmt"
+	v1 "review-service/api/review/v1"
 	"review-service/internal/data/model"
 	"review-service/pkg/snowflake"
 
@@ -39,11 +39,12 @@ func (uc *ReviewUsecase) CreateReview(ctx context.Context, review *model.ReviewI
 	// 1.2 参数业务校验：带业务逻辑的参数校验，比如已评价过的订单不能再创建评价
 	reviews, err := uc.repo.GetReviewByOrderID(ctx, review.OrderID)
 	if err != nil {
-		return nil, errors.New("查询数据库失败")
+		return nil, v1.ErrorDbFailed("查询数据库失败")
 	}
 	if len(reviews) > 0 {
 		// 已经评价过
-		return nil, fmt.Errorf("订单:%d已评价", review.OrderID)
+		fmt.Printf("订单已评价len(reviews):%d\n", len(reviews))
+		return nil, v1.ErrorOrderReviewed("订单:%d已评价", review.OrderID)
 	}
 	//2.生成评价ID
 	// 这里可以使用雪花算法自己生成

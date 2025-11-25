@@ -3,7 +3,7 @@ syntax = "proto3";
 package api.review.v1;
 
 import "google/api/annotations.proto"; 
-
+import "validate/validate.proto";
 option go_package = "review-service/api/review/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.review.v1";
@@ -25,12 +25,12 @@ service Review {
 
 // 创建评价的参数
 message CreateReviewRequest {
-	int64 userID = 1;        // 用户ID
-	int64 orderID = 2;       // 订单ID
-	int32 score = 3;		  // 商品评分
-	int32 serviceScore = 4;  // 服务评分
-	int32 expressScore = 5; // 物流评分
-	string content = 6;      // 评价内容
+	int64 userID = 1 [(validate.rules).int64 = {gt: 0}];
+	int64 orderID = 2 [(validate.rules).int64 = {gt: 0}];
+	int32 score = 3 [(validate.rules).int32 = {in: [1,2,3,4,5]}];
+	int32 serviceScore = 4 [(validate.rules).int32 = {in: [1,2,3,4,5]}];
+	int32 expressScore = 5 [(validate.rules).int32 = {in: [1,2,3,4,5]}];
+	string content = 6 [(validate.rules).string = {min_len: 8, max_len: 255}];
 	string picInfo = 7; // 评价图片
 	string videoInfo = 8; // 评价视频
 	bool anonymous = 9; // 是否匿名评价
