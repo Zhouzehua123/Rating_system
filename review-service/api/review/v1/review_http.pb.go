@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-http v2.9.0
 // - protoc             v6.33.1
-// source: api/review/v1/review.proto
+// source: review/v1/review.proto
 
 package v1
 
@@ -20,15 +20,19 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 const OperationReviewCreateReview = "/api.review.v1.Review/CreateReview"
+const OperationReviewReplyReview = "/api.review.v1.Review/ReplyReview"
 
 type ReviewHTTPServer interface {
 	// CreateReview 创建评价
 	CreateReview(context.Context, *CreateReviewRequest) (*CreateReviewReply, error)
+	// ReplyReviewB端回复评价
+	ReplyReview(context.Context, *ReplyReviewRequest) (*ReplyReviewReply, error)
 }
 
 func RegisterReviewHTTPServer(s *http.Server, srv ReviewHTTPServer) {
 	r := s.Route("/")
 	r.POST("/v1/review", _Review_CreateReview0_HTTP_Handler(srv))
+	r.POST("/v1/review/reply", _Review_ReplyReview0_HTTP_Handler(srv))
 }
 
 func _Review_CreateReview0_HTTP_Handler(srv ReviewHTTPServer) func(ctx http.Context) error {
@@ -53,9 +57,33 @@ func _Review_CreateReview0_HTTP_Handler(srv ReviewHTTPServer) func(ctx http.Cont
 	}
 }
 
+func _Review_ReplyReview0_HTTP_Handler(srv ReviewHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in ReplyReviewRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationReviewReplyReview)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ReplyReview(ctx, req.(*ReplyReviewRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*ReplyReviewReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type ReviewHTTPClient interface {
 	// CreateReview 创建评价
 	CreateReview(ctx context.Context, req *CreateReviewRequest, opts ...http.CallOption) (rsp *CreateReviewReply, err error)
+	// ReplyReviewB端回复评价
+	ReplyReview(ctx context.Context, req *ReplyReviewRequest, opts ...http.CallOption) (rsp *ReplyReviewReply, err error)
 }
 
 type ReviewHTTPClientImpl struct {
@@ -72,6 +100,20 @@ func (c *ReviewHTTPClientImpl) CreateReview(ctx context.Context, in *CreateRevie
 	pattern := "/v1/review"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationReviewCreateReview))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+// ReplyReviewB端回复评价
+func (c *ReviewHTTPClientImpl) ReplyReview(ctx context.Context, in *ReplyReviewRequest, opts ...http.CallOption) (*ReplyReviewReply, error) {
+	var out ReplyReviewReply
+	pattern := "/v1/review/reply"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationReviewReplyReview))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {

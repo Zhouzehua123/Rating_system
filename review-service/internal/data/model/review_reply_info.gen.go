@@ -19,9 +19,9 @@ type ReviewReplyInfo struct {
 	UpdateAt  time.Time `gorm:"column:update_at;not null;default:CURRENT_TIMESTAMP" json:"update_at"`
 	Version   int32     `gorm:"column:version;not null" json:"version"`
 	IsDel     int32     `gorm:"column:is_del;not null;comment:01" json:"is_del"` // 01
-	ReplyID   *int64    `gorm:"column:reply_id;comment:id" json:"reply_id"`      // id
-	ReviewID  *int64    `gorm:"column:review_id;comment:id" json:"review_id"`    // id
-	StoreID   *int64    `gorm:"column:store_id;comment:id" json:"store_id"`      // id
+	ReplyID   int64     `gorm:"column:reply_id;comment:id" json:"reply_id"`      // id
+	ReviewID  int64     `gorm:"column:review_id;comment:id" json:"review_id"`    // id
+	StoreID   int64     `gorm:"column:store_id;comment:id" json:"store_id"`      // id
 	Content   string    `gorm:"column:content;not null" json:"content"`
 	PicInfo   string    `gorm:"column:pic_info;not null" json:"pic_info"`
 	VideoInfo string    `gorm:"column:video_info;not null" json:"video_info"`
