@@ -13,6 +13,7 @@ import (
 // 定义数据库的接口，哪个数据库实现了这个SaveReview方法，该数据库就是这个接口的实现者，因此可以使用不同的数据库进行存储或者测试，例如mysql，MongoDB，甚至是内存数据库等。
 type ReviewRepo interface {
 	SaveReview(context.Context, *model.ReviewInfo) (*model.ReviewInfo, error)
+	SaveReply(context.Context, *model.ReviewReplyInfo) (*model.ReviewReplyInfo, error)
 	GetReviewByOrderID(context.Context, int64) ([]*model.ReviewInfo, error)
 }
 
@@ -31,7 +32,6 @@ func NewReviewUsecase(repo ReviewRepo, logger log.Logger) *ReviewUsecase {
 }
 
 // 创建评价，实现业务逻辑的地方
-// service 调用该方法
 func (uc *ReviewUsecase) CreateReview(ctx context.Context, review *model.ReviewInfo) (*model.ReviewInfo, error) {
 	uc.log.WithContext(ctx).Debugf("[biz] CreateReview req:%#v", review)
 	//1.数据校验
@@ -55,4 +55,19 @@ func (uc *ReviewUsecase) CreateReview(ctx context.Context, review *model.ReviewI
 	//4.拼装数据保存到数据库
 	return uc.repo.SaveReview(ctx, review)
 
+}
+
+// 创建评价回复
+func (uc *ReviewUsecase) CreateReply(ctx context.Context, param *ReplyParam) (*model.ReviewReplyInfo, error) {
+	//调用data层创建一个评价的回复
+	uc.log.WithContext(ctx).Debugf("[biz] CreateReply param:%v", param)
+	reply := &model.ReviewReplyInfo{
+		ReplyID:   snowflake.GenID(),
+		ReviewID:  param.ReviewID,
+		StoreID:   param.StoreID,
+		Content:   param.Content,
+		PicInfo:   param.PicInfo,
+		VideoInfo: param.VideoInfo,
+	}
+	return uc.repo.SaveReply(ctx, reply)
 }
