@@ -17,7 +17,7 @@ type ReviewInfo struct {
 	UpdateBy      string     `gorm:"column:update_by;not null" json:"update_by"`
 	CreateAt      time.Time  `gorm:"column:create_at;not null;default:CURRENT_TIMESTAMP" json:"create_at"`
 	UpdateAt      time.Time  `gorm:"column:update_at;not null;default:CURRENT_TIMESTAMP" json:"update_at"`
-	DeleteAt      *time.Time `gorm:"column:delete_at" json:"delete_at"`
+	DeletedAt     *time.Time `gorm:"column:deleted_at;default:null" json:"deleted_at"`
 	Version       int32      `gorm:"column:version;not null" json:"version"`
 	IsDel         int32      `gorm:"column:is_del;not null;comment:01" json:"is_del"` // 01
 	ReviewID      int64      `gorm:"column:review_id;comment:id" json:"review_id"`    // id
@@ -29,7 +29,7 @@ type ReviewInfo struct {
 	OrderID       int64      `gorm:"column:order_id;not null;comment:id" json:"order_id"` // id
 	SkuID         int64      `gorm:"column:sku_id;not null;comment:sku id" json:"sku_id"` // sku id
 	SpuID         int64      `gorm:"column:spu_id;not null;comment:spu id" json:"spu_id"` // spu id
-	StoreID       *int64     `gorm:"column:store_id;comment:id" json:"store_id"`          // id
+	StoreID       int64      `gorm:"column:store_id;comment:id" json:"store_id"`          // id
 	UserID        int64      `gorm:"column:user_id;comment:id" json:"user_id"`            // id
 	Anonymous     int32      `gorm:"column:anonymous;not null" json:"anonymous"`
 	Tags          string     `gorm:"column:tags;not null;comment:json" json:"tags"` // json
@@ -44,9 +44,10 @@ type ReviewInfo struct {
 	GoodsSnapshot string     `gorm:"column:goods_snapshot;not null" json:"goods_snapshot"`
 	ExtJSON       string     `gorm:"column:ext_json;not null" json:"ext_json"`
 	CtrlJSON      string     `gorm:"column:ctrl_json;not null" json:"ctrl_json"`
+	DeleteAt      *time.Time `gorm:"column:delete_at;comment:删除时间" json:"delete_at"` // 删除时间
 }
 
-// //获取数据库的评价信息表的表名："review_info"
+// TableName ReviewInfo's table name
 func (*ReviewInfo) TableName() string {
 	return TableNameReviewInfo
 }

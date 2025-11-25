@@ -59,6 +59,7 @@ func newReviewInfo(db *gorm.DB, opts ...gen.DOOption) reviewInfo {
 	_reviewInfo.GoodsSnapshot = field.NewString(tableName, "goods_snapshot")
 	_reviewInfo.ExtJSON = field.NewString(tableName, "ext_json")
 	_reviewInfo.CtrlJSON = field.NewString(tableName, "ctrl_json")
+	_reviewInfo.DeleteAt = field.NewTime(tableName, "delete_at")
 
 	_reviewInfo.fillFieldMap()
 
@@ -100,6 +101,7 @@ type reviewInfo struct {
 	GoodsSnapshot field.String
 	ExtJSON       field.String
 	CtrlJSON      field.String
+	DeleteAt      field.Time // 删除时间
 
 	fieldMap map[string]field.Expr
 }
@@ -147,6 +149,7 @@ func (r *reviewInfo) updateTableName(table string) *reviewInfo {
 	r.GoodsSnapshot = field.NewString(table, "goods_snapshot")
 	r.ExtJSON = field.NewString(table, "ext_json")
 	r.CtrlJSON = field.NewString(table, "ctrl_json")
+	r.DeleteAt = field.NewTime(table, "delete_at")
 
 	r.fillFieldMap()
 
@@ -173,7 +176,7 @@ func (r *reviewInfo) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (r *reviewInfo) fillFieldMap() {
-	r.fieldMap = make(map[string]field.Expr, 31)
+	r.fieldMap = make(map[string]field.Expr, 32)
 	r.fieldMap["id"] = r.ID
 	r.fieldMap["create_by"] = r.CreateBy
 	r.fieldMap["update_by"] = r.UpdateBy
@@ -205,6 +208,7 @@ func (r *reviewInfo) fillFieldMap() {
 	r.fieldMap["goods_snapshot"] = r.GoodsSnapshot
 	r.fieldMap["ext_json"] = r.ExtJSON
 	r.fieldMap["ctrl_json"] = r.CtrlJSON
+	r.fieldMap["delete_at"] = r.DeleteAt
 }
 
 func (r reviewInfo) clone(db *gorm.DB) reviewInfo {

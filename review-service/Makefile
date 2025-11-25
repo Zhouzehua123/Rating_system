@@ -3,13 +3,10 @@ GOPATH:=$(shell go env GOPATH)
 VERSION=$(shell git describe --tags --always)
 
 ifeq ($(GOHOSTOS), windows)
-	#the `find.exe` is different from `find` in bash/shell.
-	#to see https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/find.
-	#changed to use git-bash.exe to run find cli or other cli friendly, caused of every developer has a Git.
-	#Git_Bash= $(subst cmd\,bin\bash.exe,$(dir $(shell where git)))
-	Git_Bash=$(subst \,/,$(subst cmd\,bin\bash.exe,$(dir $(shell where git))))
-	INTERNAL_PROTO_FILES=$(shell $(Git_Bash) -c "find internal -name *.proto")
-	API_PROTO_FILES=$(shell $(Git_Bash) -c "find api -name *.proto")
+	# Windows: recursive ** is not supported in make wildcard; enumerate depth explicitly.
+	# Current layout: api/helloworld/v1/*.proto, api/review/v1/*.proto
+	API_PROTO_FILES := $(wildcard api/*/*/*.proto)
+	INTERNAL_PROTO_FILES := internal/conf/conf.proto
 else
 	INTERNAL_PROTO_FILES=$(shell find internal -name *.proto)
 	API_PROTO_FILES=$(shell find api -name *.proto)
@@ -43,7 +40,23 @@ api:
  	       --go-grpc_out=paths=source_relative:./api \
 	       --openapi_out=fq_schema_naming=true,default_response=false:. \
 	       $(API_PROTO_FILES)
-
+.PHONY: validate
+# generate validate proto
+validate:
+	protoc --proto_path=./api \
+	       --proto_path=./third_party \
+	       --go_out=paths=source_relative:./api \
+	       --validate_out=paths=source_relative,lang=go:./api \
+	       $(API_PROTO_FILES)
+		   
+.PHONY: errors
+errors:
+	protoc --proto_path=. \
+    	   --proto_path=./third_party \
+    	   --go_out=paths=source_relative:. \
+    	   --go-errors_out=paths=source_relative:. \
+    	   $(API_PROTO_FILES)
+		   
 .PHONY: build
 # build
 build:
@@ -80,3 +93,7 @@ help:
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
 .DEFAULT_GOAL := help
+print-vars:
+	@echo CURDIR=$(CURDIR)
+	@echo API_PROTO_FILES=$(API_PROTO_FILES)
+	@echo INTERNAL_PROTO_FILES=$(INTERNAL_PROTO_FILES)
