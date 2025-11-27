@@ -1,3 +1,6 @@
 [submodule "review-b/api"]
 	path = review-b/api
 	url = https://github.com/Zhouzehua123/reviewapis.git
+[submodule "review-b/reviewapis"]
+	path = review-b/reviewapis
+	url = https://github.com/Zhouzehua123/reviewapis.git
