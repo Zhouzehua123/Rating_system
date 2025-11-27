@@ -6,25 +6,6 @@ info:
     title: ""
     version: 0.0.1
 paths:
-    /business/v1/review/reply:
-        post:
-            tags:
-                - Business
-            description: 商家回复用户评价
-            operationId: Business_ReplyReview
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/api.business.v1.ReplyReviewRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/api.business.v1.ReplyReviewReply'
     /v1/review:
         post:
             tags:
@@ -63,6 +44,24 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/api.review.v1.ReplyReviewReply'
+    business/v1/review/reply:
+        post:
+            tags:
+                - Business
+            operationId: Business_ReplyReview
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.business.v1.ReplyReviewRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.business.v1.ReplyReviewReply'
 components:
     schemas:
         api.business.v1.ReplyReviewReply:
@@ -70,6 +69,7 @@ components:
             properties:
                 replyID:
                     type: string
+            description: 回复评价的回复
         api.business.v1.ReplyReviewRequest:
             type: object
             properties:
